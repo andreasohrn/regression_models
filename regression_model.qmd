@@ -1,0 +1,80 @@
+---
+title: "regression_model"
+format: html
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| include: false
+
+library(tidyverse)
+library(gt)
+library(readxl)
+library(exscidata)
+library(broom)
+```
+
+# Assignment 2
+
+## Task 1:
+
+```{r}
+#Task 1
+```
+
+## Task 2:
+
+```{r}
+#Task 2
+
+
+```
+
+## Task 3
+
+Vi skal undersøke om det er en sammenheng mellom økt mager kroppsmasse (LBM) og 3 repetisjoner maks i knebøy (3RM squat).
+
+```{r}
+#| echo: false
+#| warning: false
+
+linearfig <- exscidata::hypertrophy %>%
+  select(PARTICIPANT,
+         DXA_LBM_T1,
+         SQUAT_3RM) %>% 
+  ggplot(aes(DXA_LBM_T1, SQUAT_3RM)) + 
+  geom_point(size = 3, 
+             fill = "lightblue", 
+             shape = 21) +
+         labs(x = "Lean body mass(kg)", 
+              y = "3RM squat (kg)") +
+         theme_minimal() +
+  geom_smooth(method = "lm")
+linearfig
+
+#Making a regression model with LBM and 3rm squat
+
+modell <- hypertrophy %>% 
+  select(PARTICIPANT,
+         DXA_LBM_T1,
+         SQUAT_3RM)
+m1 <- lm(formula = SQUAT_3RM ~ DXA_LBM_T1, data = modell)
+
+
+tidy(m1) %>% 
+  gt() %>% 
+  fmt_auto()
+
+# for 1 kg økning i LBM, øker squatten med 1,5kg ish
+```
+
+I tabellen over ser vi sammenhengen mellom lean body mass og 3RM i knebøy.
+
+**Estimate**: Dette viser stigningstallet. Vi ser at for hver kilogram LBM øker, vil 3RM i knebøy øke med 1,458kg.
+
+**Std.error**: Standardfeil er et mål for hvor nøyaktig gjennomsnittet av en statistisk distribusjon representerer den sanne verdien. Jo lavere tallet er, jo mer pålitelig er gjennomsnittsestimatet. Tallet på 0,302 viser til en relativt lav spredning i gjennomsnittet. 
+
+**Statistics**: T-verdien er: $\frac{stigningstallet}{standardfeil}$. T-verdien brukes til å vurdere signifikansen til hver koeffisient i regresjonsmodellen. Jo høyere t-verdien er, jo større sjanse er det for at det er en signifikant sammenheng mellom LBM og 3RM knebøy. en T-verdi på 4,8 viser til en svært liten sjansje for at sammenhengen er tilfeldig. 
+
+**P-verdi**: Viser til hvor stor grad vi kan anta at det er en signifikant sammenheng mellom den uavhengige og avhengige variablen. Hvis p-verdien er under 0,05 regnes det ofte som en signifikant sammenheng. Lavere P-verdi viser til lavere sjanse for at sammenhengen vi ser er tilfeldig. vår P-verdi på: 4.421 × 10−5 (0.00004), viser til en svært stor sammenheng mellom økning i LBM og 3RM knebøy. 
