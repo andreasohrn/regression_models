@@ -127,10 +127,91 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="task-2" class="level2">
-<h2 class="anchored" data-anchor-id="task-2">Task 2:</h2>
+<section id="task-2-lage-en-calibration-curve-som-viser-effektiviteten-av-qpcr-reaksjonen" class="level2">
+<h2 class="anchored" data-anchor-id="task-2-lage-en-calibration-curve-som-viser-effektiviteten-av-qpcr-reaksjonen">Task 2: Lage en “calibration curve” som viser effektiviteten av qPCR reaksjonen</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Task 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Task 2</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">###Her har jeg ikke helt skjønt hva vi skal.....</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>poolsample1 <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"poolsample1.xlsx"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">1</span>, <span class="st">`</span><span class="at">Avg CT</span><span class="st">`</span>, <span class="st">`</span><span class="at">Log (sample quan)</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"Fortynningsserie"</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Snitt CT"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Avg CT</span><span class="st">`</span>, </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Log"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Log (sample quan)</span><span class="st">`</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+• `` -&gt; `...1`</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  Fortynningsserie `Snitt CT`   Log
+  &lt;chr&gt;                 &lt;dbl&gt; &lt;dbl&gt;
+1 1/1                    27.5     0
+2 1/10                   30.1    -1
+3 1/100                  34.5    -2
+4 1/1000                 NA      -3
+5 1/100000               NA      -4
+6 1/100000               NA      -5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Pool_sample_2 <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"Pool sample 2.xlsx"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">1</span>, <span class="st">`</span><span class="at">Avg CT</span><span class="st">`</span>, <span class="st">`</span><span class="at">Log (sample quan)</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"Fortynningsserie"</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Snitt CT"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Avg CT</span><span class="st">`</span>, </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Log"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Log (sample quan)</span><span class="st">`</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+• `` -&gt; `...1`</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  Fortynningsserie `Snitt CT`   Log
+  &lt;chr&gt;                 &lt;dbl&gt; &lt;dbl&gt;
+1 1/1                    28.7     0
+2 1/10                   30.6    -1
+3 1/100                  29.4    -2
+4 1/1000                 NA      -3
+5 1/100000               NA      -4
+6 1/100000               NA      -5</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data fra pool sample 1 (replace with your actual data)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>observed_values_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">27.5</span>, <span class="fl">30.1</span>, <span class="fl">34.5</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>true_values_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatter plot</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(true_values_1, observed_values_1, <span class="at">main=</span><span class="st">"Calibration Curve"</span>, <span class="at">xlab=</span><span class="st">"True Values"</span>, <span class="at">ylab=</span><span class="st">"Observed Values"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a line of best fit</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(observed_values_1 <span class="sc">~</span> true_values_1), <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="regression_model_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Optionally, add more formatting or annotations to the plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Data fra pool sample 2</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample data (replace with your actual data)</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>observed_values_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">28.7</span>, <span class="fl">30.6</span>, <span class="fl">29.4</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>true_values_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatter plot</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(true_values_2, observed_values_2, <span class="at">main=</span><span class="st">"Calibration Curve"</span>, <span class="at">xlab=</span><span class="st">"True Values"</span>, <span class="at">ylab=</span><span class="st">"Observed Values"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a line of best fit</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(observed_values_2 <span class="sc">~</span> true_values_2), <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="regression_model_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Optionally, add more formatting or annotations to the plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="task-3" class="level2">
@@ -138,27 +219,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Vi skal undersøke om det er en sammenheng mellom økt mager kroppsmasse (LBM) og 3 repetisjoner maks i knebøy (3RM squat).</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="regression_model_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<p><img src="regression_model_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output-display">
 
-<div id="iezfcxfpiw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#iezfcxfpiw table {
+<div id="oynqiqgjqa" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#oynqiqgjqa table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#iezfcxfpiw thead, #iezfcxfpiw tbody, #iezfcxfpiw tfoot, #iezfcxfpiw tr, #iezfcxfpiw td, #iezfcxfpiw th {
+#oynqiqgjqa thead, #oynqiqgjqa tbody, #oynqiqgjqa tfoot, #oynqiqgjqa tr, #oynqiqgjqa td, #oynqiqgjqa th {
   border-style: none;
 }
 
-#iezfcxfpiw p {
+#oynqiqgjqa p {
   margin: 0;
   padding: 0;
 }
 
-#iezfcxfpiw .gt_table {
+#oynqiqgjqa .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -184,12 +265,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#iezfcxfpiw .gt_caption {
+#oynqiqgjqa .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#iezfcxfpiw .gt_title {
+#oynqiqgjqa .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -201,7 +282,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#iezfcxfpiw .gt_subtitle {
+#oynqiqgjqa .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -213,7 +294,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#iezfcxfpiw .gt_heading {
+#oynqiqgjqa .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -225,13 +306,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#iezfcxfpiw .gt_bottom_border {
+#oynqiqgjqa .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#iezfcxfpiw .gt_col_headings {
+#oynqiqgjqa .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -246,7 +327,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#iezfcxfpiw .gt_col_heading {
+#oynqiqgjqa .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -266,7 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#iezfcxfpiw .gt_column_spanner_outer {
+#oynqiqgjqa .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -278,15 +359,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#iezfcxfpiw .gt_column_spanner_outer:first-child {
+#oynqiqgjqa .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#iezfcxfpiw .gt_column_spanner_outer:last-child {
+#oynqiqgjqa .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#iezfcxfpiw .gt_column_spanner {
+#oynqiqgjqa .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -298,11 +379,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#iezfcxfpiw .gt_spanner_row {
+#oynqiqgjqa .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#iezfcxfpiw .gt_group_heading {
+#oynqiqgjqa .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -328,7 +409,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#iezfcxfpiw .gt_empty_group_heading {
+#oynqiqgjqa .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -343,15 +424,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#iezfcxfpiw .gt_from_md > :first-child {
+#oynqiqgjqa .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#iezfcxfpiw .gt_from_md > :last-child {
+#oynqiqgjqa .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#iezfcxfpiw .gt_row {
+#oynqiqgjqa .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -370,7 +451,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#iezfcxfpiw .gt_stub {
+#oynqiqgjqa .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -383,7 +464,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#iezfcxfpiw .gt_stub_row_group {
+#oynqiqgjqa .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -397,15 +478,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#iezfcxfpiw .gt_row_group_first td {
+#oynqiqgjqa .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#iezfcxfpiw .gt_row_group_first th {
+#oynqiqgjqa .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#iezfcxfpiw .gt_summary_row {
+#oynqiqgjqa .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -415,16 +496,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#iezfcxfpiw .gt_first_summary_row {
+#oynqiqgjqa .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#iezfcxfpiw .gt_first_summary_row.thick {
+#oynqiqgjqa .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#iezfcxfpiw .gt_last_summary_row {
+#oynqiqgjqa .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -434,7 +515,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#iezfcxfpiw .gt_grand_summary_row {
+#oynqiqgjqa .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -444,7 +525,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#iezfcxfpiw .gt_first_grand_summary_row {
+#oynqiqgjqa .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -454,7 +535,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#iezfcxfpiw .gt_last_grand_summary_row_top {
+#oynqiqgjqa .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -464,11 +545,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#iezfcxfpiw .gt_striped {
+#oynqiqgjqa .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#iezfcxfpiw .gt_table_body {
+#oynqiqgjqa .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -477,7 +558,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#iezfcxfpiw .gt_footnotes {
+#oynqiqgjqa .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -491,7 +572,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#iezfcxfpiw .gt_footnote {
+#oynqiqgjqa .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -500,7 +581,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#iezfcxfpiw .gt_sourcenotes {
+#oynqiqgjqa .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -514,7 +595,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#iezfcxfpiw .gt_sourcenote {
+#oynqiqgjqa .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -522,63 +603,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#iezfcxfpiw .gt_left {
+#oynqiqgjqa .gt_left {
   text-align: left;
 }
 
-#iezfcxfpiw .gt_center {
+#oynqiqgjqa .gt_center {
   text-align: center;
 }
 
-#iezfcxfpiw .gt_right {
+#oynqiqgjqa .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#iezfcxfpiw .gt_font_normal {
+#oynqiqgjqa .gt_font_normal {
   font-weight: normal;
 }
 
-#iezfcxfpiw .gt_font_bold {
+#oynqiqgjqa .gt_font_bold {
   font-weight: bold;
 }
 
-#iezfcxfpiw .gt_font_italic {
+#oynqiqgjqa .gt_font_italic {
   font-style: italic;
 }
 
-#iezfcxfpiw .gt_super {
+#oynqiqgjqa .gt_super {
   font-size: 65%;
 }
 
-#iezfcxfpiw .gt_footnote_marks {
+#oynqiqgjqa .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#iezfcxfpiw .gt_asterisk {
+#oynqiqgjqa .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#iezfcxfpiw .gt_indent_1 {
+#oynqiqgjqa .gt_indent_1 {
   text-indent: 5px;
 }
 
-#iezfcxfpiw .gt_indent_2 {
+#oynqiqgjqa .gt_indent_2 {
   text-indent: 10px;
 }
 
-#iezfcxfpiw .gt_indent_3 {
+#oynqiqgjqa .gt_indent_3 {
   text-indent: 15px;
 }
 
-#iezfcxfpiw .gt_indent_4 {
+#oynqiqgjqa .gt_indent_4 {
   text-indent: 20px;
 }
 
-#iezfcxfpiw .gt_indent_5 {
+#oynqiqgjqa .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
