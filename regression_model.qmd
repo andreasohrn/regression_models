@@ -13,23 +13,58 @@ library(gt)
 library(readxl)
 library(exscidata)
 library(broom)
+data("cyclingstudy")
 ```
 
 # Assignment 2
 
-## Task 1:
+## Task 1: Undersøke intensiteten på 2mmol L-1 og 4mmol L-1
 
 ```{r}
-#Task 1
+cyclingstudy %>%
+  # Select columns needed for analysis
+  select(subject, group, timepoint, lac.225:lac.375) %>%
+  # Only one participant and time-point
+  filter(timepoint == "pre", subject == 10) %>%
+  # Pivot to long format data using the lactate columns
+  pivot_longer(names_to = "watt", 
+               values_to = "lactate", 
+               names_prefix = "lac.",
+               names_transform = list(watt = as.numeric),
+               cols = lac.225:lac.375) %>%  
+  # Filter NA's from the data 
+  filter(!is.na(lactate)) %>%
+  # Plot the data, group = subject needed to connect the points
+  ggplot(aes(watt, lactate, group = subject))  + 
+  geom_line(lty = 2) +
+  geom_point(shape = 21, fill = "lightblue", size = 2.5) +
+  # Adding straight lines at specific values for 2 og 4 mmol L-1
+  geom_hline(yintercept = 2, color = "red") +
+  
+  geom_hline(yintercept = 4, color = "yellow")
+
 ```
 
-## Task 2:
+## Task 2: Lage en "calibration curve" som viser effektiviteten av qPCR reaksjonen
 
 ```{r}
 #Task 2
 
+###Her har jeg ikke helt skjønt hva vi skal.....
+
+poolsample1%>%
+  select(1, `Avg CT`, `Log (sample quan)`) %>%
+    knitr::kable()
+
+Pool_sample_2%>%
+  select(1, `Avg CT`, `Log (sample quan)`) %>%
+    knitr::kable()
+
 
 ```
+
+  
+
 
 ## Task 3
 
