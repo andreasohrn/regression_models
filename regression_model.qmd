@@ -17,20 +17,65 @@ data("cyclingstudy")
 
 ```
 
+
+
+
 # Arbeidskrav 2
 
 ## Oppgave 1
-### Undersøke trenings- intensiteten på 2mmol L-1 og 4mmol L-1
+### Undersøke trenings- intensiteten på 2mmol L-1 og 4mmol L-1 
+
+#### Forsøksperson 10
 
 ```{r}
 #| echo: false
 #| warning: false
+
+
 cyclingstudy %>%
   # Select columns needed for analysis
   select(subject, group, timepoint, lac.225:lac.375) %>%
   # Only one participant and time-point
-  filter(timepoint == "pre", subject == 10) %>%
-  # Pivot to long format data using the lactate columns
+  filter(timepoint == "pre", subject == 10 ) %>%
+    # Pivot to long format data using the lactate columns
+  pivot_longer(names_to = "watt", 
+               values_to = "lactate", 
+               names_prefix = "lac.",
+               names_transform = list(watt = as.numeric),
+               cols = lac.225:lac.375) %>%  
+  # Filter NA's from the data 
+  filter(!is.na(lactate)) %>%
+  # Plot the data, group = subject needed to connect the points
+  ggplot(aes(watt, lactate, group = subject))  + 
+  geom_line(lty = 2) +
+  geom_point(shape = 21, fill = "lightblue", size = 2.5) +
+  
+  # Adding straight lines at specific values for 2 og 4 mmol L-1
+  geom_hline(yintercept = 2, color = "red") +
+  
+  geom_hline(yintercept = 4, color = "yellow")
+
+
+
+
+
+
+
+```
+
+
+#### Forsøksperson 3
+
+```{r}
+#| echo: false
+#| warning: false
+
+cyclingstudy %>%
+  # Select columns needed for analysis
+  select(subject, group, timepoint, lac.225:lac.375) %>%
+  # Only one participant and time-point
+  filter(timepoint == "pre", subject == 3 ) %>%
+    # Pivot to long format data using the lactate columns
   pivot_longer(names_to = "watt", 
                values_to = "lactate", 
                names_prefix = "lac.",
@@ -50,13 +95,28 @@ cyclingstudy %>%
 
 ```
 
+### Sammenligning av forsøksperson 10 og 3
+
+```{r}
+# compare the reliability (typical error as a percentage of the mean) between the two thresholds
+```
+
+
+
+
+
+
+
 ## Oppgave 2 
 Lage en "calibration curve" som viser effektiviteten av qPCR reaksjonen på "pool sample 1" og "pool sample 2"
 
+
+
 ```{r}
-#Task 2
 #| echo: false
 #| warning: false
+
+
 
 poolsample1 = read_excel("poolsample1.xlsx")%>%
   
@@ -67,7 +127,9 @@ poolsample1 = read_excel("poolsample1.xlsx")%>%
                 "Snitt CT" = `Avg CT`, 
                   "Log" = `Log (sample quan)`)%>%
   
-  print() 
+  print()
+  
+   
     
 
 Pool_sample_2 = read_excel("Pool sample 2.xlsx") %>%
@@ -75,17 +137,18 @@ Pool_sample_2 = read_excel("Pool sample 2.xlsx") %>%
   rename("Fortynningsserie" = 1,
                 "Snitt CT" = `Avg CT`, 
                   "Log" = `Log (sample quan)`)%>%
-print()
-
-
-
+  print()
 
 
 ```
 
+
+
+
 ```{r}
 #| echo: false
 #| warning: false
+
 # Data fra pool sample 1 (replace with your actual data)
 observed_values_1 <- c(27.5, 30.1, 34.5)
 true_values_1 <- c(0, -1, -2)
@@ -98,9 +161,10 @@ abline(lm(true_values_1 ~ observed_values_1  ), col="red")
 
 # Optionally, add more formatting or annotations to the plot
 
-
+gt(poolsample1)
 
 ```
+
 
 
 
@@ -108,6 +172,7 @@ abline(lm(true_values_1 ~ observed_values_1  ), col="red")
 ```{r}
 #| echo: false
 #| warning: false
+
 observed_values_2 <- c(28.7, 30.6, 29.4)
 true_values_2 <- c(0, -1, -2)
 
@@ -117,6 +182,11 @@ plot(observed_values_2, true_values_2, main="Effektivitet av pcr reaksjon 2", xl
 
 # Add a line of best fit
 abline(lm( true_values_2 ~ observed_values_2), col="red")
+
+
+
+gt(Pool_sample_2) 
+
 ```
 
 
