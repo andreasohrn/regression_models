@@ -96,75 +96,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="assignment-2" class="level1">
-<h1>Assignment 2</h1>
-<section id="task-1-undersøke-intensiteten-på-2mmol-l-1-og-4mmol-l-1" class="level2">
-<h2 class="anchored" data-anchor-id="task-1-undersøke-intensiteten-på-2mmol-l-1-og-4mmol-l-1">Task 1: Undersøke intensiteten på 2mmol L-1 og 4mmol L-1</h2>
+<section id="arbeidskrav-2" class="level1">
+<h1>Arbeidskrav 2</h1>
+<section id="oppgave-1" class="level2">
+<h2 class="anchored" data-anchor-id="oppgave-1">Oppgave 1</h2>
+<section id="undersøke-trenings--intensiteten-på-2mmol-l-1-og-4mmol-l-1" class="level3">
+<h3 class="anchored" data-anchor-id="undersøke-trenings--intensiteten-på-2mmol-l-1-og-4mmol-l-1">Undersøke trenings- intensiteten på 2mmol L-1 og 4mmol L-1</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cyclingstudy <span class="sc">%&gt;%</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Select columns needed for analysis</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(subject, group, timepoint, lac<span class="fl">.225</span><span class="sc">:</span>lac<span class="fl">.375</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Only one participant and time-point</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(timepoint <span class="sc">==</span> <span class="st">"pre"</span>, subject <span class="sc">==</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Pivot to long format data using the lactate columns</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"watt"</span>, </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"lactate"</span>, </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_prefix =</span> <span class="st">"lac."</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_transform =</span> <span class="fu">list</span>(<span class="at">watt =</span> as.numeric),</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">cols =</span> lac<span class="fl">.225</span><span class="sc">:</span>lac<span class="fl">.375</span>) <span class="sc">%&gt;%</span>  </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter NA's from the data </span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(lactate)) <span class="sc">%&gt;%</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot the data, group = subject needed to connect the points</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(watt, lactate, <span class="at">group =</span> subject))  <span class="sc">+</span> </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adding straight lines at specific values for 2 og 4 mmol L-1</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">4</span>, <span class="at">color =</span> <span class="st">"yellow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="regression_model_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="task-2-lage-en-calibration-curve-som-viser-effektiviteten-av-qpcr-reaksjonen" class="level2">
-<h2 class="anchored" data-anchor-id="task-2-lage-en-calibration-curve-som-viser-effektiviteten-av-qpcr-reaksjonen">Task 2: Lage en “calibration curve” som viser effektiviteten av qPCR reaksjonen</h2>
+</section>
+<section id="oppgave-2" class="level2">
+<h2 class="anchored" data-anchor-id="oppgave-2">Oppgave 2</h2>
+<p>Lage en “calibration curve” som viser effektiviteten av qPCR reaksjonen på “pool sample 1” og “pool sample 2”</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Task 2</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">###Her har jeg ikke helt skjønt hva vi skal.....</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>poolsample1 <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"poolsample1.xlsx"</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">1</span>, <span class="st">`</span><span class="at">Avg CT</span><span class="st">`</span>, <span class="st">`</span><span class="at">Log (sample quan)</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"Fortynningsserie"</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Snitt CT"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Avg CT</span><span class="st">`</span>, </span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Log"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Log (sample quan)</span><span class="st">`</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Task 2</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>poolsample1 <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"poolsample1.xlsx"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">1</span>, <span class="st">`</span><span class="at">Avg CT</span><span class="st">`</span>, <span class="st">`</span><span class="at">Log (sample quan)</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"Fortynningsserie"</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Snitt CT"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Avg CT</span><span class="st">`</span>, </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Log"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Log (sample quan)</span><span class="st">`</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>New names:
 • `` -&gt; `...1`</code></pre>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 3
-  Fortynningsserie `Snitt CT`   Log
-  &lt;chr&gt;                 &lt;dbl&gt; &lt;dbl&gt;
-1 1/1                    27.5     0
-2 1/10                   30.1    -1
-3 1/100                  34.5    -2
-4 1/1000                 NA      -3
-5 1/100000               NA      -4
-6 1/100000               NA      -5</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Pool_sample_2 <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"Pool sample 2.xlsx"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">1</span>, <span class="st">`</span><span class="at">Avg CT</span><span class="st">`</span>, <span class="st">`</span><span class="at">Log (sample quan)</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"Fortynningsserie"</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Snitt CT"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Avg CT</span><span class="st">`</span>, </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Log"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Log (sample quan)</span><span class="st">`</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Pool_sample_2 <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"Pool sample 2.xlsx"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">1</span>, <span class="st">`</span><span class="at">Avg CT</span><span class="st">`</span>, <span class="st">`</span><span class="at">Log (sample quan)</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"Fortynningsserie"</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Snitt CT"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Avg CT</span><span class="st">`</span>, </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Log"</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Log (sample quan)</span><span class="st">`</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>New names:
 • `` -&gt; `...1`</code></pre>
@@ -182,40 +154,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data fra pool sample 1 (replace with your actual data)</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>observed_values_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">27.5</span>, <span class="fl">30.1</span>, <span class="fl">34.5</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>true_values_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatter plot</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(true_values_1, observed_values_1, <span class="at">main=</span><span class="st">"Calibration Curve"</span>, <span class="at">xlab=</span><span class="st">"True Values"</span>, <span class="at">ylab=</span><span class="st">"Observed Values"</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a line of best fit</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(observed_values_1 <span class="sc">~</span> true_values_1), <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="regression_model_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Optionally, add more formatting or annotations to the plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Data fra pool sample 2</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample data (replace with your actual data)</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>observed_values_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">28.7</span>, <span class="fl">30.6</span>, <span class="fl">29.4</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>true_values_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatter plot</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(true_values_2, observed_values_2, <span class="at">main=</span><span class="st">"Calibration Curve"</span>, <span class="at">xlab=</span><span class="st">"True Values"</span>, <span class="at">ylab=</span><span class="st">"Observed Values"</span>)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a line of best fit</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(observed_values_2 <span class="sc">~</span> true_values_2), <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="regression_model_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Optionally, add more formatting or annotations to the plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="task-3" class="level2">
-<h2 class="anchored" data-anchor-id="task-3">Task 3</h2>
+<section id="oppgave-3" class="level2">
+<h2 class="anchored" data-anchor-id="oppgave-3">Oppgave 3</h2>
 <p>Vi skal undersøke om det er en sammenheng mellom økt mager kroppsmasse (LBM) og 3 repetisjoner maks i knebøy (3RM squat).</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -223,23 +173,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell-output-display">
 
-<div id="oynqiqgjqa" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#oynqiqgjqa table {
+<div id="eicfnycain" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#eicfnycain table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#oynqiqgjqa thead, #oynqiqgjqa tbody, #oynqiqgjqa tfoot, #oynqiqgjqa tr, #oynqiqgjqa td, #oynqiqgjqa th {
+#eicfnycain thead, #eicfnycain tbody, #eicfnycain tfoot, #eicfnycain tr, #eicfnycain td, #eicfnycain th {
   border-style: none;
 }
 
-#oynqiqgjqa p {
+#eicfnycain p {
   margin: 0;
   padding: 0;
 }
 
-#oynqiqgjqa .gt_table {
+#eicfnycain .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -265,12 +215,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#oynqiqgjqa .gt_caption {
+#eicfnycain .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#oynqiqgjqa .gt_title {
+#eicfnycain .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -282,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#oynqiqgjqa .gt_subtitle {
+#eicfnycain .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -294,7 +244,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#oynqiqgjqa .gt_heading {
+#eicfnycain .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -306,13 +256,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#oynqiqgjqa .gt_bottom_border {
+#eicfnycain .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#oynqiqgjqa .gt_col_headings {
+#eicfnycain .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -327,7 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#oynqiqgjqa .gt_col_heading {
+#eicfnycain .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -347,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#oynqiqgjqa .gt_column_spanner_outer {
+#eicfnycain .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -359,15 +309,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#oynqiqgjqa .gt_column_spanner_outer:first-child {
+#eicfnycain .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#oynqiqgjqa .gt_column_spanner_outer:last-child {
+#eicfnycain .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#oynqiqgjqa .gt_column_spanner {
+#eicfnycain .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -379,11 +329,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#oynqiqgjqa .gt_spanner_row {
+#eicfnycain .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#oynqiqgjqa .gt_group_heading {
+#eicfnycain .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -409,7 +359,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#oynqiqgjqa .gt_empty_group_heading {
+#eicfnycain .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -424,15 +374,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#oynqiqgjqa .gt_from_md > :first-child {
+#eicfnycain .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#oynqiqgjqa .gt_from_md > :last-child {
+#eicfnycain .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#oynqiqgjqa .gt_row {
+#eicfnycain .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -451,7 +401,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#oynqiqgjqa .gt_stub {
+#eicfnycain .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -464,7 +414,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#oynqiqgjqa .gt_stub_row_group {
+#eicfnycain .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -478,15 +428,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#oynqiqgjqa .gt_row_group_first td {
+#eicfnycain .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#oynqiqgjqa .gt_row_group_first th {
+#eicfnycain .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#oynqiqgjqa .gt_summary_row {
+#eicfnycain .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -496,16 +446,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#oynqiqgjqa .gt_first_summary_row {
+#eicfnycain .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#oynqiqgjqa .gt_first_summary_row.thick {
+#eicfnycain .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#oynqiqgjqa .gt_last_summary_row {
+#eicfnycain .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -515,7 +465,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#oynqiqgjqa .gt_grand_summary_row {
+#eicfnycain .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -525,7 +475,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#oynqiqgjqa .gt_first_grand_summary_row {
+#eicfnycain .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -535,7 +485,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#oynqiqgjqa .gt_last_grand_summary_row_top {
+#eicfnycain .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -545,11 +495,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#oynqiqgjqa .gt_striped {
+#eicfnycain .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#oynqiqgjqa .gt_table_body {
+#eicfnycain .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -558,7 +508,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#oynqiqgjqa .gt_footnotes {
+#eicfnycain .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -572,7 +522,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#oynqiqgjqa .gt_footnote {
+#eicfnycain .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -581,7 +531,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#oynqiqgjqa .gt_sourcenotes {
+#eicfnycain .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -595,7 +545,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#oynqiqgjqa .gt_sourcenote {
+#eicfnycain .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -603,63 +553,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#oynqiqgjqa .gt_left {
+#eicfnycain .gt_left {
   text-align: left;
 }
 
-#oynqiqgjqa .gt_center {
+#eicfnycain .gt_center {
   text-align: center;
 }
 
-#oynqiqgjqa .gt_right {
+#eicfnycain .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#oynqiqgjqa .gt_font_normal {
+#eicfnycain .gt_font_normal {
   font-weight: normal;
 }
 
-#oynqiqgjqa .gt_font_bold {
+#eicfnycain .gt_font_bold {
   font-weight: bold;
 }
 
-#oynqiqgjqa .gt_font_italic {
+#eicfnycain .gt_font_italic {
   font-style: italic;
 }
 
-#oynqiqgjqa .gt_super {
+#eicfnycain .gt_super {
   font-size: 65%;
 }
 
-#oynqiqgjqa .gt_footnote_marks {
+#eicfnycain .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#oynqiqgjqa .gt_asterisk {
+#eicfnycain .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#oynqiqgjqa .gt_indent_1 {
+#eicfnycain .gt_indent_1 {
   text-indent: 5px;
 }
 
-#oynqiqgjqa .gt_indent_2 {
+#eicfnycain .gt_indent_2 {
   text-indent: 10px;
 }
 
-#oynqiqgjqa .gt_indent_3 {
+#eicfnycain .gt_indent_3 {
   text-indent: 15px;
 }
 
-#oynqiqgjqa .gt_indent_4 {
+#eicfnycain .gt_indent_4 {
   text-indent: 20px;
 }
 
-#oynqiqgjqa .gt_indent_5 {
+#eicfnycain .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
