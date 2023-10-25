@@ -13,6 +13,9 @@ library(gt)
 library(readxl)
 library(exscidata)
 library(broom)
+library(ggplot2)
+library(ggtext)
+
 data("cyclingstudy")
 
 ```
@@ -56,9 +59,9 @@ cyclingstudy %>%
   geom_hline(yintercept = 4, color = "yellow")
 
 
+fp10 <- lm(lac.250 ~ subject==10 , cyclingstudy)
 
-
-
+fp10$coefficients[1]
 
 
 ```
@@ -72,7 +75,7 @@ cyclingstudy %>%
 
 cyclingstudy %>%
   # Select columns needed for analysis
-  select(subject, group, timepoint, lac.225:lac.375) %>%
+  select(subject, group, timepoint, lac.125:lac.375) %>%
   # Only one participant and time-point
   filter(timepoint == "pre", subject == 3 ) %>%
     # Pivot to long format data using the lactate columns
@@ -80,9 +83,14 @@ cyclingstudy %>%
                values_to = "lactate", 
                names_prefix = "lac.",
                names_transform = list(watt = as.numeric),
-               cols = lac.225:lac.375) %>%  
+               cols = lac.125:lac.375) %>%  
   # Filter NA's from the data 
   filter(!is.na(lactate)) %>%
+  
+  
+  
+  
+  
   # Plot the data, group = subject needed to connect the points
   ggplot(aes(watt, lactate, group = subject))  + 
   geom_line(lty = 2) +
@@ -93,13 +101,80 @@ cyclingstudy %>%
   
   geom_hline(yintercept = 4, color = "yellow")
 
+
+fp3 <- lm(lac.250 ~ subject==3 , cyclingstudy)
+
+fp3$coefficients[1]
+
+
 ```
 
 ### Sammenligning av forsøksperson 10 og 3
 
 ```{r}
 # compare the reliability (typical error as a percentage of the mean) between the two thresholds
+
+
 ```
+
+
+
+### Endring i lactat 125 watt og 250 watt
+
+```{r}
+#| echo: false
+#| warning: false
+
+cyclingstudy %>% 
+        select(subject, group, timepoint, lac.125) %>%
+        pivot_wider(names_from = timepoint, 
+                    values_from = lac.125) %>%
+        mutate(change = meso3 - pre) %>%
+        ggplot(aes(group, change)) + geom_boxplot()+
+        labs(y = "Laktat (mmol/L) endring fra pre to meso3", 
+             x = "Gruppe", 
+             title = "Endring i lactat 125 watt") + 
+        
+        theme(axis.title.y = element_markdown())
+```
+
+```{r}
+#| echo: false
+#| warning: false
+cyclingstudy %>% 
+        select(subject, group, timepoint, lac.250) %>%
+        pivot_wider(names_from = timepoint, 
+                    values_from = lac.250) %>%
+        mutate(change = meso3 - pre) %>%
+        ggplot(aes(group, change)) + geom_boxplot()+
+        labs(y = "Laktat (mmol/L) endring fra pre to meso3", 
+             x = "Gruppe", 
+             title = "Endring i lactat 250 watt") + 
+        
+        theme(axis.title.y = element_markdown())
+```
+
+
+
+
+
+
+
+
+```{r}
+#| echo: false
+#| warning: false
+plot(fp3)
+
+```
+
+
+```{r}
+#| echo: false
+#| warning: false
+plot(fp10)
+```
+
 
 
 
@@ -219,10 +294,10 @@ modell <- hypertrophy %>%
   select(PARTICIPANT,
          DXA_LBM_T1,
          SQUAT_3RM)
-m1 <- lm(formula = SQUAT_3RM ~ DXA_LBM_T1, data = modell)
+m3 <- lm(formula = SQUAT_3RM ~ DXA_LBM_T1, data = modell)
 
 
-tidy(m1) %>% 
+tidy(m3) %>% 
   gt() %>% 
   fmt_auto()
 
