@@ -2,7 +2,7 @@
 title: "regression_model"
 format: html
 editor_options: 
-  chunk_output_type: inline
+  chunk_output_type: console
 ---
 
 ```{r}
@@ -21,21 +21,13 @@ data("cyclingstudy")
 
 ```
 
-
-
-
 # Arbeidskrav 2
 
-Her har vi først laget en figur som viser treningsintensiteten på 2 og 4 mmol/L hos forsøksperson 10 og 3.
-Videre har vi figur som estimerer laktat terskel etter Machado.
-Tilslutt tall på en lactat terskel etter en anslått fast verdi.
-
-Har også laget en boxplot for endring i lactat 125 watt og 250 watt for gruppene pre,incr og mix, men gjerne se litt på disse....
-
-
+Her har vi først laget en figur som viser treningsintensiteten på 2 og 4 mmol/L hos forsøksperson 10 og 3. Videre har vi en figur som estimerer laktat terskel etter Machado. Til slutt tall på en laktat terskel etter en anslått fast verdi.
 
 ## Oppgave 1
-### Undersøke trenings- intensiteten på 2mmol L-1 og 4mmol L-1 hos forsøksperson 10 og 3
+
+### Undersøke treningsintensiteten på 2mmol L-1 og 4mmol L-1 hos forsøksperson 10 og 3
 
 #### Forsøksperson 10
 
@@ -74,7 +66,6 @@ fp10$coefficients[1]
 
 
 ```
-
 
 #### Forsøksperson 3
 
@@ -118,7 +109,7 @@ fp3$coefficients[1]
 
 ```
 
-### Lactat terskel på forsøksperson 10 etter Machodo" lactate threshold estimated by the maximal deviation method (LTDmax)
+### Laktatterskel på forsøksperson 10 etter Machodo "lactate threshold estimated by the maximal deviation method (LTDmax)".
 
 #### Forsøksperson 10
 
@@ -186,7 +177,7 @@ dat %>%
   geom_point()
 ```
 
-### Lactat terskel på forsøksperson 3 etter Machado " lactate threshold estimated by the maximal deviation method (LTDmax)"
+### Laktatterskel på forsøksperson 3 etter Machado "lactate threshold estimated by the maximal deviation method (LTDmax)"
 
 #### Forsøksperson 3
 
@@ -254,8 +245,7 @@ dat %>%
   geom_point()
 ```
 
-
-### "predicted - fixed lactate value" 
+### "Predicted - fixed lactate value"
 
 #### Forsøksperson 10
 
@@ -292,7 +282,7 @@ new_data %>%
   filter(dist == min(dist)) # Where the dist value equals the minimum dist value
 ```
 
-### "predicted - fixed lactate value" 
+### "Predicted - fixed lactate value"
 
 #### Forsøksperson 3
 
@@ -329,10 +319,7 @@ new_data %>%
   filter(dist == min(dist)) # Where the dist value equals the minimum dist value
 ```
 
-
-
-
-### Endring i lactat 125 watt og 250 watt
+### Endring i laktat 125 watt og 250 watt
 
 ```{r}
 #| echo: false
@@ -344,9 +331,9 @@ cyclingstudy %>%
                     values_from = lac.125) %>%
         mutate(change = meso3 - pre) %>%
         ggplot(aes(group, change)) + geom_boxplot()+
-        labs(y = "Laktat (mmol/L) endring fra pre to meso3", 
+        labs(y = "Laktat (mmol/L) endring fra pre til meso3", 
              x = "Gruppe", 
-             title = "Endring i lactat 125 watt") + 
+             title = "Endring i laktat 125 watt") + 
         
         theme(axis.title.y = element_markdown())
 ```
@@ -360,26 +347,16 @@ cyclingstudy %>%
                     values_from = lac.250) %>%
         mutate(change = meso3 - pre) %>%
         ggplot(aes(group, change)) + geom_boxplot()+
-        labs(y = "Laktat (mmol/L) endring fra pre to meso3", 
+        labs(y = "Laktat (mmol/L) endring fra pre til meso3", 
              x = "Gruppe", 
-             title = "Endring i lactat 250 watt") + 
+             title = "Endring i laktat 250 watt") + 
         
         theme(axis.title.y = element_markdown())
 ```
 
+## Oppgave 2
 
-
-
-
-
-
-
-
-
-## Oppgave 2 
-Lage en "calibration curve" som viser effektiviteten av qPCR reaksjonen pC% "pool sample 1" og "pool sample 2"
-
-
+Lage en "calibration curve" som viser effektiviteten av qPCR reaksjonen på "pool sample 1" og "pool sample 2"
 
 ```{r}
 #| echo: false
@@ -411,9 +388,6 @@ Pool_sample_2 = read_excel("Pool sample 2.xlsx") %>%
 
 ```
 
-
-
-
 ```{r}
 #| echo: false
 #| warning: false
@@ -433,10 +407,6 @@ abline(lm(true_values_1 ~ observed_values_1  ), col="red")
 gt(poolsample1)
 
 ```
-
-
-
-
 
 ```{r}
 #| echo: false
@@ -458,11 +428,9 @@ gt(Pool_sample_2)
 
 ```
 
-
-
 ## Oppgave 3
 
-Vi skal undersC8ke om det er en sammenheng mellom C8kt mager kroppsmasse (LBM) og 3 repetisjoner maks i knebC8y (3RM squat).
+Vi skal undersøke om det er en sammenheng mellom økt mager kroppsmasse (LBM) og 3 repetisjoner maks i knebøy (3RM squat).
 
 ```{r}
 #| echo: false
@@ -498,17 +466,12 @@ tidy(m3) %>%
 # for 1 kg C8kning i LBM, C8ker squatten med 1,5kg ish
 ```
 
-I tabellen over ser vi sammenhengen mellom lean body mass og 3RM i knebC8y.
+I tabellen over ser vi sammenhengen mellom lean body mass og 3RM i knebøy.
 
-**Estimate**: Dette viser stigningstallet. Vi ser at for hver kilogram LBM C8ker, vil 3RM i knebC8y C8ke med 1,458kg.
+**Estimate**: Dette viser stigningstallet. Vi ser at for hver kilogram LBM øker, vil 3RM i knebøy øke med 1,458kg.
 
-**Std.error**: Standardfeil er et mC%l for hvor nC8yaktig gjennomsnittet av en statistisk distribusjon representerer den sanne verdien. Jo lavere tallet er, jo mer pC%litelig er gjennomsnittsestimatet. Tallet pC% 0,302 viser til en relativt lav spredning i gjennomsnittet. 
+**Std.error**: Standardfeil er et mål for hvor nøyaktig gjennomsnittet av en statistisk distribusjon representerer den sanne verdien. Jo lavere tallet er, jo mer pålitelig er gjennomsnittsestimatet. Tallet på 0,302 viser til en relativt lav spredning i gjennomsnittet.
 
-**Statistics**: T-verdien er: $\frac{stigningstallet}{standardfeil}$. T-verdien brukes til C% vurdere signifikansen til hver koeffisient i regresjonsmodellen. Jo hC8yere t-verdien er, jo stC8rre sjanse er det for at det er en signifikant sammenheng mellom LBM og 3RM knebC8y. en T-verdi pC% 4,8 viser til en svC&rt liten sjansje for at sammenhengen er tilfeldig. 
+**Statistics**: T-verdien er: $\frac{stigningstallet}{standardfeil}$. T-verdien brukes til å vurdere signifikansen til hver koeffisient i regresjonsmodellen. Jo høyere t-verdien er, jo større sjanse er det for at det er en signifikant sammenheng mellom LBM og 3RM knebøy. en T-verdi på 4,8 viser til en svært liten sjansje for at sammenhengen er tilfeldig.
 
-**P-verdi**: Viser til hvor stor grad vi kan anta at det er en signifikant sammenheng mellom den uavhengige og avhengige variablen. Hvis p-verdien er under 0,05 regnes det ofte som en signifikant sammenheng. Lavere P-verdi viser til lavere sjanse for at sammenhengen vi ser er tilfeldig. vC%r P-verdi pC%: 4.421 C 10b5 (0.00004), viser til en svC&rt stor sammenheng mellom C8kning i LBM og 3RM knebC8y. 
-
-
-
-
-
+**P-verdi**: Viser til hvor stor grad vi kan anta at det er en signifikant sammenheng mellom den uavhengige og avhengige variablen. Hvis p-verdien er under 0,05 regnes det ofte som en signifikant sammenheng. Lavere P-verdi viser til lavere sjanse for at sammenhengen vi ser er tilfeldig. vær P-verdi på: 4.421 \* 10^-5^ viser til en svært stor sammenheng mellom økning i LBM og 3RM knebøy.
