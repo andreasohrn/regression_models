@@ -1,5 +1,5 @@
 ---
-title: "regression_model"
+title: "Regresjonsmodeller"
 format: html
 editor_options: 
   chunk_output_type: console
